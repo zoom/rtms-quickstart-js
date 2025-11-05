@@ -36,31 +36,6 @@ rtms.onWebhookEvent(({ event, payload }) => {
     console.log(`[${timestamp}] -- ${metadata.userName}: ${data}`);
   });
 
-  client.onAudioData((data, size, timestamp, metadata) => {
-      console.log(`Received ${size} bytes of audio data at ${timestamp} from ${metadata.userName}`);
-  });
-
-  // Configure HD video (720p H.264 at 30fps)
-  const video_params =  {
-    contentType: rtms.VideoContentType.RAW_VIDEO,
-    codec: rtms.VideoCodec.H264,
-    resolution: rtms.VideoResolution.SD,
-    dataOpt: rtms.VideoDataOption.VIDEO_SINGLE_ACTIVE_STREAM,
-    fps: 30
-  }
-
-  client.setVideoParams(video_params);
-
-  client.onVideoData((data, size, timestamp, metadata) => {
-    console.log(`Received ${size} bytes of video data at ${timestamp} from ${metadata.userName}`);
-  });
-
-  client.setDeskshareParams(video_params)
-
-  client.onDeskshareData((data, size, timestamp, metadata) => {
-    console.log(`Received ${size} bytes of deskshare data at ${timestamp} from ${metadata.userName}`);
-  });
-
   // Join the meeting using the webhook payload directly
   client.join(payload);
 });
