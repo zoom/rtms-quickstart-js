@@ -32,15 +32,9 @@ rtms.onWebhookEvent(({ event, payload }) => {
   const client = new rtms.Client();
   clients.set(streamId, client);
 
-
-  client.onAudioData((data, size, timestamp, metadata) => {
-      console.log(`Received ${size} bytes of audio data at ${timestamp} from ${metadata.userName} -- ${metadata.userId}`);
+  client.onTranscriptData((data, size, timestamp, metadata) => {
+    console.log(`[${timestamp}] -- ${metadata.userName}: ${data}`);
   });
-
-  client.onSessionUpdate((op, sessionInfo) => {
-    console.log(`Session update: ${op} - ${sessionInfo}`);
-  });
-
 
   // Join the meeting using the webhook payload directly
   client.join(payload);
