@@ -59,66 +59,9 @@ import rtms from "@zoom/rtms";
 const rtms = require('@zoom/rtms').default;
 ```
 
-### Two Usage Patterns
+### 🏢 Client-Based Approach
 
-The SDK supports two approaches for connecting to meetings:
-
-#### 1. 🏢 Client-Based Approach (Multiple Meetings)
-
-Use this for handling multiple concurrent meetings:
-
-```javascript
-// Create clients for each meeting
-const client = new rtms.Client();
-
-// Set up callbacks
-client.onAudioData((buffer, size, timestamp, metadata) => {
-  console.log(`🎵 Audio from ${metadata.userName}: ${size} bytes`);
-});
-
-client.onVideoData((buffer, size, timestamp, metadata) => {
-  console.log(`📹 Video from ${metadata.userName}: ${size} bytes`);
-});
-
-client.onTranscriptData((buffer, size, timestamp, metadata) => {
-  const text = buffer.toString('utf8');
-  console.log(`💬 ${metadata.userName}: ${text}`);
-});
-
-// Join the meeting
-client.join({
-  meeting_uuid: "meeting-uuid",
-  rtms_stream_id: "stream-id", 
-  server_urls: "wss://rtms.zoom.us"
-});
-```
-
-#### 2. 🌐 Global Singleton Approach (Single Meeting)
-
-Use this for simple single-meeting applications:
-
-```javascript
-// Set up global callbacks
-rtms.onAudioData((buffer, size, timestamp, metadata) => {
-  console.log(`🎵 Audio from ${metadata.userName}: ${size} bytes`);
-});
-
-rtms.onTranscriptData((buffer, size, timestamp, metadata) => {
-  const text = buffer.toString('utf8');
-  console.log(`💬 ${metadata.userName}: ${text}`);
-});
-
-// Join the meeting
-rtms.join({
-  meeting_uuid: "meeting-uuid",
-  rtms_stream_id: "stream-id",
-  server_urls: "wss://rtms.zoom.us"
-});
-```
-
-## 🪝 Webhook Integration
-
-Set up webhook handling to automatically connect when meetings start:
+Create a client for each meeting to handle multiple concurrent meetings:
 
 ```javascript
 // Listen for Zoom webhook events
