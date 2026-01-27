@@ -8,7 +8,7 @@
     "start": "node --env-file=.env index.js"
   },
   "dependencies": {
-    "@zoom/rtms": "^0.0.7"
+    "@zoom/rtms": "^1.0.1"
   },
   "author": "Zoom Communications, Inc.",
   "license": "MIT"
